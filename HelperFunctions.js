@@ -16,11 +16,20 @@ const ran = (length,character) =>{
    return res;
 }
 
+const ranChar = (length) =>{
+    let res = '';
+    for ( let i = 0; i < length; i++ ) 
+      res += c.charAt(Math.floor(Math.random()*c.length))
+   return res;
+}
+
 
 module.exports = {
     getPhone,
     makeid,
     makeTicket,
-    getUID
+    getUID,
+    ran,
+    ranChar
 }
 

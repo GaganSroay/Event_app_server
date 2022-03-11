@@ -6,13 +6,16 @@ const user_ref = firestore.collection('users');
 const express = require('express')
 const router = express.Router()
 
+const {ranChar} = require('./HelperFunctions')
 
-express.router('/message',(req,res)=>{
+
+router.post('/message',(req,res)=>{
+    console.log('here')
     const topic = 'topic';
-    const message = {
+    const payload = {
         message : req.body.message,
         user : req.body.decodedToken.user_id,
-        messageId : getRandomString(6),
+        messageId : ranChar(6),
         timestamp : Date.now(),
         notification: {
             title: 'Message Title',
@@ -21,8 +24,8 @@ express.router('/message',(req,res)=>{
         topic: topic
     }
     
-    firestore.doc(req.body.event_id).collection("messages").add(message);
-    admin.messaging().send(message)
+    firestore.doc(req.body.event_id).collection("messages").add(payload);
+    //admin.messaging().send(message)
 
     res.send("done")
 

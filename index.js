@@ -9,9 +9,11 @@ express.use(bodyParser.urlencoded({extended: true}));
 const authentication = require('./authentication')
 const create_event = require('./create_event')
 const join_event = require('./join_event')
+const message = require('./message')
 
 express.use(authentication)
 express.use(create_event)
 express.use(join_event)
+express.use(message)
 
 express.listen(PORT,()=> console.log(`Listening at PORT ${PORT}`))
