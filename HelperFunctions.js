@@ -2,6 +2,7 @@
 const c        = 'abcdefghijklmnopqrstuvwxyz1234567890@#$%&'
 const ac       = 'abcdefghijklmnopqrstuvwxyz'
 const nc       = '0123456789'
+const s        = '@#$%&*'
 
 const getPhone = req => req.body.decodedToken.phone_number
 const getUID = req => req.body.decodedToken.user_id
