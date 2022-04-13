@@ -1,6 +1,4 @@
-const admin = require("../../presistence/FirebaseAdmin");
 const getUser = require("./GetUser");
-const userRef = admin.firestore().collection("users");
 
 const checkUser = async (userId) => {
   const user = await getUser(userId);
