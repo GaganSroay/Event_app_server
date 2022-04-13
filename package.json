@@ -16,7 +16,8 @@
     "express": "^4.17.2",
     "firebase": "^9.6.6",
     "firebase-admin": "^10.0.2",
-    "mongoose": "^6.2.1"
+    "mongoose": "^6.2.1",
+    "node-schedule": "^2.1.0"
   },
   "devDependencies": {
     "eslint": "^8.12.0",

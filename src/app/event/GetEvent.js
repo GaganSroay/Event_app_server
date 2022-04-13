@@ -1,5 +1,5 @@
 const admin = require("../../presistence/FirebaseAdmin");
-const firestore = admin.firestore()
+const firestore = admin.firestore();
 const eventRef = admin.firestore().collection("events");
 const userRef = admin.firestore().collection("users");
 
@@ -38,27 +38,27 @@ const getEvent = async (query, authContext) => {
   });
 };
 
-const getEventFromId = async(eventId) =>{
-  const eventDocs = await eventRef.where("event_id","==",eventId).get()
-  
-  if(!eventDocs) return {error:"event not found"}
-  if(!eventDocs.docs[0]) return {error:"event not found"}
+const getEventFromId = async (eventId) => {
+  const eventDocs = await eventRef.where("event_id", "==", eventId).get();
 
-  return eventDocs.docs[0]
-}
+  if (!eventDocs) return { error: "event not found" };
+  if (!eventDocs.docs[0]) return { error: "event not found" };
 
-const getEventFromPath = async(path) => {
-  if(!path) return { error : "Path must be provided"}
+  return eventDocs.docs[0];
+};
 
-  const event = await firestore.doc(path).get()
-  if(!event) return { error : "Event not found"}
+const getEventFromPath = async (path) => {
+  if (!path) return { error: "Path must be provided" };
 
-  return event
-}
+  const event = await firestore.doc(path).get();
+  if (!event) return { error: "Event not found" };
 
-module.exports = { 
-  getJoinedEvent, 
-  getOragnisedEvent, 
-  getEventFromId, 
-  getEventFromPath 
+  return event;
+};
+
+module.exports = {
+  getJoinedEvent,
+  getOragnisedEvent,
+  getEventFromId,
+  getEventFromPath,
 };
