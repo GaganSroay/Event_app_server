@@ -2,6 +2,9 @@ const admin = require("../presistence/FirebaseAdmin");
 
 const verifyFirebaseTokken = async (req, res, next) => {
   const token = req.headers.token;
+  if (!token) {
+    res.send({ error: "no token provided" });
+  }
 
   const decodedToken = await verifyTokken(token);
 
@@ -13,6 +16,7 @@ const verifyFirebaseTokken = async (req, res, next) => {
 };
 
 const verifyTokken = (token) => {
+  if (!token) return { error: "no token provided" };
   return new Promise((res, rej) => {
     admin
       .auth()

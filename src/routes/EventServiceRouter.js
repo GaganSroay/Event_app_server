@@ -4,7 +4,8 @@ const {
   getEventRole,
   getEventRoleFromPath,
 } = require("../app/event_service/GetEventRole");
-const startEvent = require("../app/event_service/StartEvent");
+const { startEvent } = require("../app/event_service/StartEvent");
+const verifyTicket = require("../app/ticket/VerifyTicket");
 const sendData = require("../mapper/simpleRequestDTO");
 
 const router = express.Router();
@@ -29,6 +30,12 @@ router.post("/edit_event/", async (req, res) => {
 router.get("/start_event/:event_id", async (req, res) => {
   const eventId = req.params.event_id;
   const updates = await startEvent(eventId, req.user);
+  sendData(updates, res);
+});
+
+router.post("/verify_ticket", async (req, res) => {
+  const updates = await verifyTicket(req, req.user);
+  console.log(updates);
   sendData(updates, res);
 });
 

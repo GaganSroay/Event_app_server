@@ -27,6 +27,7 @@ router.post("/create_user", async (req, res) => {
 router.get("/check/:userId", async (req, res) => {
   const userId = req.params.userId;
   const found = await checkUser(userId);
+  console.log(found);
   sendData(found, res);
 });
 

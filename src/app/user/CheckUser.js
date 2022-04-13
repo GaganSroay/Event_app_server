@@ -6,10 +6,10 @@ const checkUser = async (userId) => {
 
   const userData = user.data();
 
-  if (userData.name && userData.phone && userData.email && userData.birth)
-    return { found: true };
-
-  return { found: false };
+  if (!userData) return { found: false };
+  const found =
+    userData.name && userData.phone && userData.email && userData.birth;
+  return { found };
 };
 
 module.exports = checkUser;
