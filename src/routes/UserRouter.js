@@ -34,7 +34,15 @@ router.get("/check/:userId", async (req, res) => {
 router.get("/verify_id_token", async (req, res) => {
   const token = req.headers.token;
   const decodedToken = await verifyTokken(token);
-  res.send(decodedToken);
+  const result = {};
+  if (decodedToken.error) {
+    result.verified = false;
+    result.error = decodedToken.error.code.toString();
+  } else {
+    result.verified = true;
+    result.token = decodedToken;
+  }
+  res.send(result);
 });
 
 module.exports = router;

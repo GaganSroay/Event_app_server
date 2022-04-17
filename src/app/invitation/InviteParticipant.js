@@ -42,6 +42,7 @@ const inviteParticipant = async (req, authContext) => {
     const user = userDoc.data();
 
     const invitation = {
+      user: userDoc.id,
       event_id: eventId,
       invited_by: invitedBy,
       role,

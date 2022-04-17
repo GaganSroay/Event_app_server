@@ -8,10 +8,12 @@ const {
 } = require("../app/event/GetEvent");
 const getEventBody = require("../app/event/GetEventBody");
 const getEventId = require("../app/event/GetEventId");
+const getInvitations = require("../app/invitation/GetInvitations");
 const joinEvent = require("../app/event/JoinEvent");
 const queryEvent = require("../app/event/QueryEvent");
 const getTicket = require("../app/ticket/GetTicket");
 const sendData = require("../mapper/simpleRequestDTO");
+const deleteInvitation = require("../app/invitation/DeleteInvitation");
 const router = express.Router();
 
 router.get("/joined", async (req, res) => {
@@ -21,6 +23,11 @@ router.get("/joined", async (req, res) => {
 
 router.get("/organised", async (req, res) => {
   const list = await getOragnisedEvent(req.user);
+  res.send(list);
+});
+
+router.get("/invitation", async (req, res) => {
+  const list = await getInvitations(req.user);
   res.send(list);
 });
 
@@ -35,9 +42,10 @@ router.get("/query/:eventId", async (req, res) => {
   sendData(queryRes, res);
 });
 
-router.post("/join_event/:eventId", async (req, res) => {
-  console.log("Here joining event " + req.params);
+router.post("/join_event/", async (req, res) => {
+  const eventId = req.body.event_id
   const eventRefForUser = await joinEvent(req, req.user);
+  const update = await deleteInvitation(eventId,req.user)
   res.send(eventRefForUser);
 });
 

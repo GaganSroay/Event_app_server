@@ -4,7 +4,7 @@ const {
   getEventRole,
   getEventRoleFromPath,
 } = require("../app/event_service/GetEventRole");
-const inviteParticipant = require("../app/event_service/InviteParticipant");
+const inviteParticipant = require("../app/invitation/InviteParticipant");
 const leaveEvent = require("../app/event_service/LeaveEvent");
 const { startEvent } = require("../app/event_service/StartEvent");
 const verifyTicket = require("../app/ticket/VerifyTicket");

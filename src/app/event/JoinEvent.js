@@ -4,48 +4,44 @@ const eventRef = firestore.collection("events");
 const userRef = firestore.collection("users");
 
 const { makeTicket } = require("../../utils/HelperFunctions");
+const { getEventFromId } = require("./GetEvent");
 
 const joinEvent = async (req, authContext) => {
-  const role = "p";
+  const body = req.body;
   const ticket = makeTicket();
-  const event_id = req.params.eventId;
+  const eventId = body.event_id;
+  const form_data = body.form_data;
 
-  const eventDocQuery = await eventRef.where("event_id", "==", event_id).get();
-
-  if (!eventDocQuery) return { error: "not found" };
-  if (!eventDocQuery.docs[0]) return { error: "not found" };
-
-  const eventDoc = eventDocQuery.docs[0];
-  const participant = {
-    event_id,
-    ref: eventRef.doc(eventDoc.id),
-    role,
-  };
-  const eventRefForUser = {
-    user: authContext.user_id,
-    role,
-  };
-
+  const eventDoc = await getEventFromId(eventId);
+  if (eventDoc.error) return { error: "event not found" };
   const eventData = eventDoc.data();
+
+  if (eventData.form.required)
+    if (!body.form_data) return { error: "please send form data" };
+
+  const participant = {
+    event_id: eventId,
+    ref: eventRef.doc(eventDoc.id),
+    role: "p",
+  };
+  const eventParticipant = {
+    user: authContext.user_id,
+    role: "p",
+  };
 
   if (eventData.ticket_required) {
     participant.ticket = ticket;
-    eventRefForUser.ticket = ticket;
+    eventParticipant.ticket = ticket;
   }
-  if (eventData.form.required) eventRefForUser.form_data = form_data;
+  if (eventData.form.required) eventParticipant.form_data = form_data;
 
-  console.log(eventData);
+  await userRef.doc(authContext.user_id).collection("events").add(participant);
+  await eventRef
+    .doc(eventDoc.id)
+    .collection("participants")
+    .add(eventParticipant);
 
-  const dbTasks = [];
-  dbTasks.push(
-    userRef.doc(authContext.user_id).collection("events").add(participant)
-  );
-  dbTasks.push(
-    eventRef.doc(eventDoc.id).collection("participants").add(eventRefForUser)
-  );
-  await Promise.all(dbTasks);
-
-  return eventRefForUser;
+  return eventParticipant;
 };
 
 module.exports = joinEvent;
