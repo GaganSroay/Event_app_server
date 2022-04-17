@@ -43,9 +43,9 @@ router.get("/query/:eventId", async (req, res) => {
 });
 
 router.post("/join_event/", async (req, res) => {
-  const eventId = req.body.event_id
+  const eventId = req.body.event_id;
   const eventRefForUser = await joinEvent(req, req.user);
-  const update = await deleteInvitation(eventId,req.user)
+  const update = await deleteInvitation(eventId, req.user);
   res.send(eventRefForUser);
 });
 
