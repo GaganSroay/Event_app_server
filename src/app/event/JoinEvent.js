@@ -43,7 +43,6 @@ const joinEvent = async (req, authContext) => {
   dbTasks.push(
     eventRef.doc(eventDoc.id).collection("participants").add(eventRefForUser)
   );
-
   await Promise.all(dbTasks);
 
   return eventRefForUser;

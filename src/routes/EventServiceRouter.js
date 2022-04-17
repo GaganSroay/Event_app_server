@@ -4,6 +4,8 @@ const {
   getEventRole,
   getEventRoleFromPath,
 } = require("../app/event_service/GetEventRole");
+const inviteParticipant = require("../app/event_service/InviteParticipant");
+const leaveEvent = require("../app/event_service/LeaveEvent");
 const { startEvent } = require("../app/event_service/StartEvent");
 const verifyTicket = require("../app/ticket/VerifyTicket");
 const sendData = require("../mapper/simpleRequestDTO");
@@ -38,5 +40,18 @@ router.post("/verify_ticket", async (req, res) => {
   console.log(updates);
   sendData(updates, res);
 });
+
+router.post("/invite", async (req, res) => {
+  const participantList = await inviteParticipant(req, req.user);
+  console.log(participantList);
+  sendData(participantList, res);
+});
+
+router.get("/leave/:eventId", async(req,res)=>{
+  const eventId = req.params.eventId;
+  const updates = await leaveEvent(eventId,req.user)
+  console.log(updates)
+  sendData(updates,res)
+})
 
 module.exports = router;

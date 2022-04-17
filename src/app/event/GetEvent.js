@@ -3,15 +3,8 @@ const firestore = admin.firestore();
 const eventRef = admin.firestore().collection("events");
 const userRef = admin.firestore().collection("users");
 
-const getJoinedEvent = async (req, authContext) => {
-  const eventList = await getEvent("p", authContext);
-  return eventList;
-};
-
-const getOragnisedEvent = async (req, authContext) => {
-  const eventList = await getEvent("a", authContext);
-  return eventList;
-};
+const getJoinedEvent = async authContext => await getEvent("p", authContext);
+const getOragnisedEvent = async authContext => await getEvent("a", authContext);
 
 const getEvent = async (query, authContext) => {
   const eventsSnapshot = await userRef
@@ -40,19 +33,15 @@ const getEvent = async (query, authContext) => {
 
 const getEventFromId = async (eventId) => {
   const eventDocs = await eventRef.where("event_id", "==", eventId).get();
-
   if (!eventDocs) return { error: "event not found" };
   if (!eventDocs.docs[0]) return { error: "event not found" };
-
   return eventDocs.docs[0];
 };
 
 const getEventFromPath = async (path) => {
   if (!path) return { error: "Path must be provided" };
-
   const event = await firestore.doc(path).get();
   if (!event) return { error: "Event not found" };
-
   return event;
 };
 
