@@ -3,8 +3,9 @@ const firestore = admin.firestore();
 const eventRef = admin.firestore().collection("events");
 const userRef = admin.firestore().collection("users");
 
-const getJoinedEvent = async authContext => await getEvent("p", authContext);
-const getOragnisedEvent = async authContext => await getEvent("a", authContext);
+const getJoinedEvent = async (authContext) => await getEvent("p", authContext);
+const getOragnisedEvent = async (authContext) =>
+  await getEvent("a", authContext);
 
 const getEvent = async (query, authContext) => {
   const eventsSnapshot = await userRef

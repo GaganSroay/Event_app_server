@@ -47,11 +47,11 @@ router.post("/invite", async (req, res) => {
   sendData(participantList, res);
 });
 
-router.get("/leave/:eventId", async(req,res)=>{
+router.get("/leave/:eventId", async (req, res) => {
   const eventId = req.params.eventId;
-  const updates = await leaveEvent(eventId,req.user)
-  console.log(updates)
-  sendData(updates,res)
-})
+  const updates = await leaveEvent(eventId, req.user);
+  console.log(updates);
+  sendData(updates, res);
+});
 
 module.exports = router;

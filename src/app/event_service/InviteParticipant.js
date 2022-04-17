@@ -28,14 +28,13 @@ const inviteParticipant = async (req, authContext) => {
 
   const invitations = [];
   for (let i = 0; i < numbers.length; i++) {
-
     if (!usersDocsList[i]) {
-      invitations.push({found:false})
+      invitations.push({ found: false });
       continue;
     }
 
     if (!usersDocsList[i].docs[0]) {
-      invitations.push({found:false})
+      invitations.push({ found: false });
       continue;
     }
 
@@ -49,14 +48,9 @@ const inviteParticipant = async (req, authContext) => {
       phone: user.phone,
     };
 
-    await userDoc.ref
-      .collection("invitations")
-      .add(invitation);
+    await userDoc.ref.collection("invitations").add(invitation);
 
-    await eventRef
-      .doc(eventDoc.id)
-      .collection("invitations")
-      .add(invitation);
+    await eventRef.doc(eventDoc.id).collection("invitations").add(invitation);
 
     invitation.found = true;
     invitations.push(invitation);
