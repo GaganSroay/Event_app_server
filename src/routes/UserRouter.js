@@ -18,16 +18,14 @@ router.post("/get_user", verifyFirebaseTokken, async (req, res) => {
   else res.send(userDoc.data());
 });
 
-router.post("/create_user", async (req, res) => {
-  const userId = req.body.user_id;
-  const user = await createUser(req, userId);
+router.post("/create_user", verifyFirebaseTokken, async (req, res) => {
+  const user = await createUser(req, req.user);
   sendData(user, res);
 });
 
 router.get("/check/:userId", async (req, res) => {
   const userId = req.params.userId;
   const found = await checkUser(userId);
-  console.log(found);
   sendData(found, res);
 });
 

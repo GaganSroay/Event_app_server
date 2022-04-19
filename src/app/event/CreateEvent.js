@@ -29,7 +29,6 @@ const createEvent = async (req, authContext) => {
     user: authContext.user_id,
     role,
   };
-  console.log(event_data);
 
   const createdEvent = await eventRef.add(event_data);
   eventRef.doc(createdEvent.id).collection("participants").add(participant);
@@ -39,6 +38,7 @@ const createEvent = async (req, authContext) => {
     ref: eventRef.doc(createdEvent.id),
     role,
   };
+
   userRef
     .doc(authContext.user_id)
     .collection("events")

@@ -10,11 +10,13 @@ const eventsRouter = require("./routes/EventRouter");
 const messageRouter = require("./routes/MessageRouter");
 const eventServiceRouter = require("./routes/EventServiceRouter");
 const userRouter = require("./routes/UserRouter");
+const megaEventRouter = require("./routes/MegaEventRoutes");
 const initStartEventTriggers = require("./presistence/StartEventTrigger");
 
 express.use("/user", userRouter);
 express.use(verifyFirebaseTokken);
 express.use("/events", eventsRouter);
+express.use("/mega_event", megaEventRouter);
 express.use("/events_service", eventServiceRouter);
 express.use("/message", messageRouter);
 

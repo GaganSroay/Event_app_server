@@ -1,7 +1,8 @@
 const admin = require("../../presistence/FirebaseAdmin");
 const userRef = admin.firestore().collection("users");
 
-const createUser = async (req, userId) => {
+const createUser = async (req, authContext) => {
+  const userId = authContext.user_id;
   const data = req.body;
 
   if (!data) return { error: "user data must be provided" };
