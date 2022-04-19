@@ -13,7 +13,7 @@ router.get("/get_mega_event/:megaEventId", async (req, res) => {
   const megaEventId = req.params.megaEventId;
   const megaEventData = await getMegaEvent(megaEventId);
 
-  if(megaEventData.error) res.status(400).send(megaEventData)
+  if (megaEventData.error) res.status(400).send(megaEventData);
   else res.send(megaEventData.data());
 });
 
