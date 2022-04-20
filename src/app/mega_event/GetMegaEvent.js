@@ -1,6 +1,7 @@
 const admin = require("../../presistence/FirebaseAdmin");
 const firestore = admin.firestore();
 const megaEventRef = firestore.collection("mega_events");
+
 const getMegaEvent = async (eventId) => {
   if (!eventId) return { error: "PLease provide eventId" };
 

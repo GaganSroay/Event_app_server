@@ -7,7 +7,8 @@ const userRef = firestore.collection("users");
 
 const createMegaSubEvent = async (req, authContext) => {
   const data = req.body;
-  const megaEventId = body.mega_event_id;
+  if(!data) return{error:"body not found"}
+  const megaEventId = data.mega_event_id;
   const event_id = makeid();
   const role = "o";
   const ticketRequired = data.ticket_required == "true";
@@ -53,3 +54,5 @@ const createMegaSubEvent = async (req, authContext) => {
 
   return userEventListElement;
 };
+
+module.exports = createMegaSubEvent
